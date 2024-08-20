@@ -1,0 +1,38 @@
+#include<stdio.h>
+#include<conio.h>
+struct data{
+    int id ,salary;
+    char name[30],post[30];
+}dt[1000],t;
+void main()
+{
+    FILE *fp;
+    fp=fopen("sam.txt","r");
+    int i=0,j,k;
+    while((fscanf(fp,"%d\t%s\t%s\t%d",&dt[i].id,dt[i].name,dt[i].post,&dt[i].salary))!=EOF)
+    {
+        i=i+1;
+    }
+    fclose(fp);
+    for(j=0;j<=i-1;j++)
+    {
+        for(k=1+j;k<=i;k++)
+        {
+            if(dt[j].salary>dt[k].salary)
+            {
+                t=dt[j];
+                dt[j]=dt[k];
+                dt[k]=t;
+            }
+        }
+    }
+    fp=fopen("sort_sam.txt","w");
+    for(j=0;j<=i;j++)
+    {
+        fprintf(fp,"%d\t%s\t%s\t%d",dt[i].id,dt[i].name,dt[i].post,dt[i].salary);
+    }
+    remove("sam.txt");
+    rename("sort_sam.txt","sam.txt");
+    fclose(fp);
+    getch();
+}
